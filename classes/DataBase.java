@@ -2,16 +2,23 @@ package classes;
 
 import java.util.ArrayList;
 
-//APLIQUE SINGLETON NESTA CLASSE
-
 public class DataBase {
     
+    private static DataBase instance;
+
     private ArrayList<Aluno> alunos;
     private ArrayList<Professor> professores;
     private ArrayList<Curso> cursos;
     private ArrayList<Turma> turmas;
 
-    public DataBase() {
+    public static DataBase getInstance(){
+        if(instance == null)
+            instance = new DataBase();
+
+        return instance;
+    }
+    
+    private DataBase() {
         this.alunos = new ArrayList<>();
         this.professores = new ArrayList<>();
         this.cursos = new ArrayList<>();
@@ -30,8 +37,8 @@ public class DataBase {
         cursos.add(new Curso("Linguagem de programação", "3"));
         cursos.add(new Curso("Estrutura de dados", "5"));
 
-        turmas.add(new Turma("20243", cursos.get(0), "5"));
-        turmas.add(new Turma("20247", cursos.get(1), "6"));
+        turmas.add(new Turma("20243", cursos.get(0), new Semestre("5", false)));
+        turmas.add(new Turma("20247", cursos.get(1), new Semestre("6", true)));
 
         turmas.get(0).adicionarProfessor(professores.get(0));
         for (Aluno aluno : alunos) {
